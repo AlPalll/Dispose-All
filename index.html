@@ -11,15 +11,15 @@
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
       <script src="https://cdn.jsdelivr.net/npm/vue"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
-      
+      <script src="script.js"></script>
    </head>
    <body >
       <div id="app">
          <!-- main page  -->
          <div v-if="curPage=='main'" id="main">
             <div id="header">
-               <img id="logo" src="/Users/pratikgoswami/Desktop/EECS493/final_project/Dispose-All/images/Block-M.jpeg">
-               <h1 id="headerText">Disp<img id="recycling" src="/Users/pratikgoswami/Desktop/EECS493/final_project/Dispose-All/images/pw-recycling.png">se-All</h1>
+               <img id="logo" src="images/Block-M.jpeg">
+               <h1 id="headerText">Disp<img id="recycling" src="images/pw-recycling.png">se-All</h1>
             </div>
             <div>
                <h2 id="mainText">University of Michigan's favorite way to reduce, reuse, and recycle!</h2>
@@ -60,8 +60,11 @@
                <input type="text" id="textInput"/>
                <button type="button" class="btn btn-success">Search</button>
             </div>
+			<div id="map"></div>
+			<!-- Async script executes immediately and must be after any DOM elements used in callback. -->
+			<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBcbfy33oV2AXrETnmD74T819p9Ao7wkD0&callback=initMap&v=weekly" async></script>
          </div>
       </div>
-      <script src="script.js"></script>
+      
    </body>
 </html>

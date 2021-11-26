@@ -1,0 +1,58 @@
+body {
+    font-family: 'Rubik'; 
+    background: #BAF2BF;
+}
+
+#header {
+    background: #009900;
+    height: 150px;
+}
+
+#headerText {
+    text-align: center;
+    vertical-align: middle;
+    color: white;
+    font-size: 100px;
+    line-height: 150px;
+    margin-top: 0px;
+    margin-left: 100px;
+}
+
+#recycling {
+    object-fit: cover;
+    height: 50px;
+    width: 50px;
+    border-radius: 90px;
+}
+
+#logo {
+    float: right;
+    width: 120px;
+    height: auto;
+    margin-top: 30px;
+    margin-right: 25px;
+    object-fit: cover;
+}
+
+#mainText {
+    text-align: center;
+    margin-top: 50px;
+    color: #009900;
+}
+
+#menuBtns {
+    margin-top: 50px;
+    text-align: center;
+}
+
+#menuBtns .btn-success {
+    background-color: #009900;
+    border-radius: 20px;
+}
+#map {
+	position: relative;
+	left: 50%;
+	transform: translate(-50%, 0%);
+	height: 800px;
+	width: 800px;
+}

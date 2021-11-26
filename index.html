@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en-US">
    <head>
-      <title> Dispose-All </title>
+      <title>Dispose-All</title>
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
       <!-- Optional theme -->
       <link rel="stylesheet" href="style.css">
@@ -10,13 +10,24 @@
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
       <script src="https://cdn.jsdelivr.net/npm/vue"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
-      </title>
+      
    </head>
-   <style>
-   </style>
    <body >
-      <div id='app'>
-      Hello World
+      <div id="app">
+         <div v-if="curPage=='locate'" id="locate">
+            <div class="header">
+               <button type="button" class="btn btn-success">Home</button>
+               <h1>Disposal Locations</h1>
+            </div>
+            <div class="options">
+               <button type="button" class="btn btn-success">Trash</button>
+               <button type="button" class="btn btn-success">Recycle</button>
+               <button type="button" class="btn btn-success">Electronic</button>
+               <button type="button" class="btn btn-success">Biological</button>
+               <input type="text" id="textInput"/>
+               <button type="button" class="btn btn-success">Search</button>
+            </div>
+         </div>
       </div>
       <script src="script.js"></script>
    </body>

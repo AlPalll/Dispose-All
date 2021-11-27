@@ -11,7 +11,6 @@
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
       <script src="https://cdn.jsdelivr.net/npm/vue"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
-      <script src="script.js"></script>
    </head>
    <body >
       <div id="app">
@@ -26,7 +25,7 @@
             </div>
             <div id="menuBtns">
                <div class="btn-group-vertical btn-group-lg">
-                  <button type="button" class="btn btn-success">View Nearby Disposal Locations</button>
+                  <button type="button" class="btn btn-success" v-on:click="curPage='locate'">View Nearby Disposal Locations</button>
                   <br>
                   <br>
                   <button type="button" class="btn btn-success">Submit New Disposal Locations</button>
@@ -43,11 +42,11 @@
          <div v-if="curPage=='locate'" id="locate">
             <div class="row">
                <div class="col-lg-4">
-                  <button type="button" class="btn btn-success" v-on:click="curPage='home'">Home</button>
+                  <button type="button" class="btn btn-success" v-on:click="curPage='main'">Home</button>
                </div>
                <div class="col-lg-4 text-center">
                   <br><br>
-                  <h1 style="color:#009900;">Disposal Locations</h1>
+                  <h1 style="color:#009900;font-size: 70px;">Disposal Locations</h1>
                   <br>
                   <h4 style="color:#009900;">Select waste types and input distance: </h4>
                   
@@ -75,7 +74,7 @@
                <br><br>
             </div>
 			<div id="map"></div>
-			<!-- Async script executes immediately and must be after any DOM elements used in callback. -->
+         <script src="script.js"></script>
 			<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBcbfy33oV2AXrETnmD74T819p9Ao7wkD0&callback=initMap&v=weekly" async></script>
          </div>
       </div>

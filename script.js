@@ -32,6 +32,7 @@ var resultView = new Vue({
     //TODO | @RAUL: This function returns true or false depending on whether the given location is within this.locateDistance from the user
     //              Will return False when the given location is too far away.
     withinUserRange(lat, long) {
+      //if distace(disposal, user)
       return true;
     },
 
@@ -45,10 +46,7 @@ var resultView = new Vue({
 
         //Check if types match user options
         for (j = 0; j < 6; ++j) {
-          if (response.data.values[i][j + 3] == "TRUE" && !this.locateOptions.has(options[j])) {
-            valid = false;
-          }
-          else if (response.data.values[i][j + 3] == "FALSE" && this.locateOptions.has(options[j])) {
+          if (response.data.values[i][j + 3] == "FALSE" && this.locateOptions.has(options[j])) {
             valid = false;
           }
         }

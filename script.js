@@ -1,9 +1,7 @@
-window.googleDocCallback = function () { return true; };
-
 var resultView = new Vue({
   el: '#app',
   data: {
-    curPage: 'locate',
+    curPage: 'main',
     locateOptions: new Set(),
     locateDistance: 0,
     locateResults: [],
@@ -24,18 +22,43 @@ var resultView = new Vue({
     },
 
     handleLocate() {
-
-      
-      /*axios
-          .get('https://sheets.googleapis.com/v4/spreadsheets/1w8qms9wIXwbTyU_N0tBiNIii3t3-t_OIwmKTX6RSc08/values/', {
-            headers: {
-              'Authorization': `Bearer ya29.a0ARrdaM88XuuQ8BBTkPm1HjGAb4iSPAAHfwifqq8eqr1ncWIcXtmaMiolOR7FabS_dxpoVCmpgeeGIhga6h7DAbUQChcAIYrRDsCbQB2LLLP7rbHgydVXfcc8ZbfZgij4ih081fIIp-3XP-MCx_iKT3kQX1Wi&callback=googleDocCallback`,
-              'content-type':'application/json',
-            }
-          })
-          .then(response => (console.log(response)));
-      */
+      axios
+          .get('https://sheets.googleapis.com/v4/spreadsheets/1w8qms9wIXwbTyU_N0tBiNIii3t3-t_OIwmKTX6RSc08/values/A2:J1000?key=AIzaSyAyPyz8Df6KljEVecXIsxRRNhEe1QmRTMA')
+          .then(response => (handleSheetsResponse(response)));
     },
+
+    //TODO | @RAUL: This function returns true or false depending on whether the given location is within this.locateDistance from the user
+    //              Will return False when the given location is too far away.
+    withinUserRange(lat, long) {
+      return false;
+    },
+
+    handleSheetsResponse(response) {
+      for (i = 0; i < Object.keys(response.data.values).length; ++i) {
+        let valid = true;
+        let options = ['landfill', 'recycle', 'bottle', 'can', 'chemical', 'electronic']
+
+        //Check if types match user options
+        for (j = 0; j < 6; ++j) {
+          if (response.data.values[i][j + 3] == "TRUE" && !this.locateOptions.has(options[j])) {
+            valid = false;
+          }
+          else if (response.data.values[i][j + 3] == "FALSE" && this.locateOptions.has(options[j])) {
+            valid = false;
+          }
+        }
+
+        //Check if distance is within preferred user range
+        if (!withinUserRange(response.data.values[i][1], response.data.values[i][2])) {
+          valid = false;
+        }
+
+        //Populate locateResults with valid locations
+        if (valid) {
+          this.locateResults.append(response.data.values[i]);
+        }
+      }
+    }
 
   }
 })

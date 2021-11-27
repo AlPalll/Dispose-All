@@ -40,13 +40,6 @@
             </div>
          </div>
 
-         
-         
-         
-         
-         
-         
-         
          <div v-if="curPage=='locate'" id="locate">
             <div class="row">
                <div class="col-lg-4">
@@ -54,9 +47,9 @@
                </div>
                <div class="col-lg-4 text-center">
                   <br><br>
-                  <h1>Disposal Locations</h1>
+                  <h1 style="color:#009900;">Disposal Locations</h1>
                   <br>
-                  <h4>Select types of waste and input desired distance: </h4>
+                  <h4 style="color:#009900;">Select waste types and input distance: </h4>
                   
                </div>
                <div class="col-lg-4">
@@ -77,11 +70,9 @@
                <button v-else type="button" class="btn btn-outline-success" v-on:click="addLocateOption('chemical')">Chemical</button>
                <button v-if="locateOptions.has('electronic')"type="button" class="btn btn-success" v-on:click="removeLocateOption('electronic')">Electronic</button>
                <button v-else type="button" class="btn btn-outline-success" v-on:click="addLocateOption('electronic')">Electronic</button>
-               <input type="text" id="textInput" value="Distance" v-on:keyup="handleDistanceInput"/>
+               <input type="text" id="textInput" placeholder="miles" v-on:keyup="handleDistanceInput"/>
                <button type="button" class="btn btn-success" v-on:click="handleLocate">Find Disposal Locations</button>
                <br><br>
-            </div>
-            <div id="locateMap">
             </div>
 			<div id="map"></div>
 			<!-- Async script executes immediately and must be after any DOM elements used in callback. -->

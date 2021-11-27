@@ -3,8 +3,6 @@ var resultView = new Vue({
   data: {
     curPage: 'main',
     locateOptions: new Set(),
-    locateDistance: 0,
-    locateResults: [],
   },
   methods: {
     addLocateOption(option) {
@@ -58,6 +56,7 @@ var resultView = new Vue({
           this.locateResults.append(response.data.values[i]);
         }
       }
+      console.log(this.locateResults)
     }
 
   }

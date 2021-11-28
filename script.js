@@ -29,11 +29,27 @@ var resultView = new Vue({
           .then(response => (this.handleSheetsResponse(response)));
     },
 
-    //TODO | @RAUL: This function returns true or false depending on whether the given location is within this.locateDistance from the user
-    //              Will return False when the given location is too far away.
     withinUserRange(lat, long) {
-      //if distace(disposal, user)
-      return true;
+      let RADIUS = 6371; // Radius of the earth in km
+      let dLat = this.degToRad(lat-crd.latitude);  // degToRad below
+      let dLon = this.degToRad(long-crd.longitude); 
+      let a = 
+        Math.sin(dLat/2) * Math.sin(dLat/2) +
+        Math.cos(this.degToRad(crd.latitude)) * Math.cos(this.degToRad(lat)) * 
+        Math.sin(dLon/2) * Math.sin(dLon/2)
+        ; 
+      let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+      let distance = (RADIUS * c) / 1.609; // Distance in mi
+
+      if (distance <= this.locateDistance) {
+        return true;
+      }
+      return false
+
+    },
+
+    degToRad(degrees) {
+      return degrees * (Math.PI/180)
     },
 
     handleSheetsResponse(response) {
@@ -61,6 +77,7 @@ var resultView = new Vue({
           this.locateResults.push(response.data.values[i]);
         }
       }
+      console.log('Locate Results:')
       console.log(this.locateResults);
 	  deleteMarkers();
 	  initMarkers();

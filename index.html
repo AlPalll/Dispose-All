@@ -25,7 +25,7 @@
             </div>
             <div id="menuBtns">
                <div class="btn-group-vertical btn-group-lg">
-                  <button type="button" class="btn btn-success" v-on:click="curPage='locate'">View Nearby Disposal Locations</button>
+                  <button type="button" class="btn btn-success" v-on:click="curPage='locate'; showMap();">View Nearby Disposal Locations</button>
                   <br>
                   <br>
                   <button type="button" class="btn btn-success">Submit New Disposal Locations</button>
@@ -42,7 +42,7 @@
          <div v-if="curPage=='locate'" id="locate">
             <div class="row">
                <div class="col-lg-4">
-                  <button type="button" class="btn btn-success" v-on:click="curPage='main'">Home</button>
+                  <button type="button" class="btn btn-success" v-on:click="curPage='main'; hideMap();">Home</button>
                </div>
                <div class="col-lg-4 text-center">
                   <br><br>
@@ -73,10 +73,12 @@
                <button type="button" class="btn btn-success" v-on:click="handleLocate">Find Disposal Locations</button>
                <br><br>
             </div>
-			<div id="map"></div>
-         <script src="script.js"></script>
-			<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBcbfy33oV2AXrETnmD74T819p9Ao7wkD0&callback=initMap&v=weekly" async></script>
+			
          </div>
+		 <div id="map"></div>
+         
+			<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBcbfy33oV2AXrETnmD74T819p9Ao7wkD0&v=weekly" async></script>
+		 <script src="script.js"></script>
       </div>
       
    </body>

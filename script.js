@@ -62,12 +62,21 @@ var resultView = new Vue({
         }
       }
       console.log(this.locateResults);
-    }
+	  deleteMarkers();
+	  initMarkers();
+    },
+	showMap() {
+		document.getElementById( 'map' ).style.display = "block";
+		initMap();
+	},
+	hideMap() {
+		document.getElementById( 'map' ).style.display = "none";
+	}
+	
 
   }
 })
-
-
+let infoWindow;
 let map;
 let marker; // this is just the center marker
 let markers = []
@@ -78,24 +87,79 @@ let disposals = [
 	{ lat: 42.2920, lng: -83.71575 },
 	{ lat: 42.2920, lng: -83.71595 },
 ]
-const bellTower = { lat: 42.29208364363135, lng: -83.71624887321929 };
-function initMap() {
-	map = new google.maps.Map(document.getElementById("map"), {
-		center: bellTower,
-		zoom: 20,
-	});
-	// this is just the center marker
-	marker = new google.maps.Marker({
-		position: { lat: 42.2920, lng: -83.71585 },
-		map: map,
-	});
-	// loop through marker array
-	for(var i = 0; i < disposals.length; i++) {
+
+var options = {
+	enableHighAccuracy: true,
+	timeout: 5000,
+	maximumAge: 0
+};
+var crd;
+function success(pos) {
+	crd = pos.coords;
+
+	console.log('Your current position is:');
+	console.log(`Latitude : ${crd.latitude}`);
+	console.log(`Longitude: ${crd.longitude}`);
+	console.log(`More or less ${crd.accuracy} meters.`);
+}
+
+function error(err) {
+	console.warn(`ERROR(${err.code}): ${err.message}`);
+}
+function initMarkers() {
+	// loop through locateResults
+	for(var i = 0; i < resultView.locateResults.length; i++) {
 		markers[i] = new google.maps.Marker({
-			position: disposals[i],
+			position: { lat: parseFloat(resultView.locateResults[i][1]), lng: parseFloat(resultView.locateResults[i][2])},
 			map: map,
-			id: i,
+			id: parseInt(resultView.locateResults[i][0]),
 		});
 		console.log("marker");
 	};
+}
+navigator.geolocation.getCurrentPosition(success, error, options);
+function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+	infoWindow.setPosition(pos);
+	infoWindow.setContent(
+	browserHasGeolocation
+		? "Error: The Geolocation service failed."
+		: "Error: Your browser doesn't support geolocation."
+	);
+	infoWindow.open(map);
+}
+function initMap() {
+	map = new google.maps.Map(document.getElementById("map"), {
+		center: { lat: crd.latitude, lng: crd.longitude},
+		zoom: 20,
+	});
+	infoWindow = new google.maps.InfoWindow();
+
+	const locationButton = document.createElement("button");
+
+	locationButton.textContent = "Pan to Current Location";
+	locationButton.classList.add("custom-map-control-button");
+	map.controls[google.maps.ControlPosition.TOP_CENTER].push(locationButton);
+	locationButton.addEventListener("click", function() {map.setCenter({ lat: crd.latitude, lng: crd.longitude})});
+}
+// Sets the map on all markers in the array.
+function setMapOnAll(map) {
+  for (let i = 0; i < markers.length; i++) {
+    markers[i].setMap(map);
+  }
+}
+
+// Removes the markers from the map, but keeps them in the array.
+function hideMarkers() {
+  setMapOnAll(null);
+}
+
+// Shows any markers currently in the array.
+function showMarkers() {
+  setMapOnAll(map);
+}
+
+// Deletes all markers in the array by removing references to them.
+function deleteMarkers() {
+  hideMarkers();
+  markers = [];
 }

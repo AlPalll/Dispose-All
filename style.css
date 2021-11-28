@@ -50,6 +50,7 @@ body {
     border-radius: 20px;
 }
 #map {
+	display: none;
 	position: relative;
 	left: 50%;
 	transform: translate(-50%, 0%);

@@ -126,12 +126,13 @@ function error(err) {
 function initMarkers() {
 	// loop through locateResults
 	for(var i = 0; i < resultView.locateResults.length; i++) {
+		const img = findIcon(resultView.locateResults[i]);
 		markers[i] = new google.maps.Marker({
 			position: { lat: parseFloat(resultView.locateResults[i][1]), lng: parseFloat(resultView.locateResults[i][2])},
 			map: map,
 			id: parseInt(resultView.locateResults[i][0]),
+			icon: img,
 		});
-		console.log("marker");
 	};
 }
 navigator.geolocation.getCurrentPosition(success, error, options);
@@ -179,4 +180,28 @@ function showMarkers() {
 function deleteMarkers() {
   hideMarkers();
   markers = [];
+}
+
+// Marker Icon
+function findIcon(mark){
+	var x;
+	if(mark[3] == "TRUE"){
+		x = "images/landfill.png";
+	}
+	if(mark[4] == "TRUE"){
+		x = "images/recycle.png";
+	}
+	if(mark[5] == "TRUE"){
+		x = "images/bottles.png";
+	}
+	if(mark[6] == "TRUE"){
+		x = "images/metals.png";
+	}
+	if(mark[7] == "TRUE"){
+		x = "images/chemicals.png";
+	}
+	if(mark[8] == "TRUE"){
+		x = "images/electronics.png";
+	}
+	return x;
 }

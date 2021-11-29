@@ -29,10 +29,10 @@ var resultView = new Vue({
           .then(response => (this.handleSheetsResponse(response)));
     },
 
-    withinUserRange(lat, long) {
+    withinUserRange(lat, lng) {
       let RADIUS = 6371; // Radius of the earth in km
       let dLat = this.degToRad(lat-crd.latitude);  // degToRad below
-      let dLon = this.degToRad(long-crd.longitude); 
+      let dLon = this.degToRad(lng-crd.longitude); 
       let a = 
         Math.sin(dLat/2) * Math.sin(dLat/2) +
         Math.cos(this.degToRad(crd.latitude)) * Math.cos(this.degToRad(lat)) * 
@@ -148,7 +148,7 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
 function initMap() {
 	map = new google.maps.Map(document.getElementById("map"), {
 		center: { lat: crd.latitude, lng: crd.longitude},
-		zoom: 20,
+		zoom: 18,
 	});
 	infoWindow = new google.maps.InfoWindow();
 

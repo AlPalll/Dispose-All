@@ -25,24 +25,209 @@
             </div>
             <div id="menuBtns">
                <div class="btn-group-vertical btn-group-lg">
-                  <button type="button" class="btn btn-success" v-on:click="curPage='locate'; showMap();">View Nearby Disposal Locations</button>
-                  <br>
-                  <br>
-                  <button type="button" class="btn btn-success">Submit New Disposal Locations</button>
-                  <br>
-                  <br>
-                  <button type="button" class="btn btn-success">Recycling Tutorial</button>
-                  <br>
-                  <br>
-                  <button type="button" class="btn btn-success">Need Help?</button>
+                  <button type="button" class="btn btn-success" style="margin-bottom: 40px;" v-on:click="curPage='locate'; showMap();">View Nearby Disposal Locations</button>
+                  <button type="button" class="btn btn-success" style="margin-bottom: 40px;" v-on:click="curPage='submitLoc'">Submit New Disposal Locations</button>
+                  <button type="button" class="btn btn-success" style="margin-bottom: 40px;" v-on:click="curPage='tutorial';">What Do I Recycle and How?</button>
+                  <button type="button" class="btn btn-success" style="margin-bottom: 40px;" v-on:click="curPage='helpMenu';">Need Help?</button>
                </div>
             </div>
          </div>
+         <!-- tutorial -->
+         <div v-if="curPage=='tutorial'">
+            <button type="button" class="btn btn-success" style="margin: 10px; position: fixed;" v-on:click="curPage='main';">Home</button>
+            <h1 id="tutorial-title">How To Recycle Common Household Items</h1>
+            <p class="p1">Deciding to recycle items is a great first step. However, you also want to make sure that the items are recycled correctly!
+               Common types of household recyclables and the best methods to recycle them are shown below.
+            </p>
+            <p id="page-summary"> 
+               <strong>On this page:</strong>
+            </p>
+            <ol id="waste-types">
+               <li>
+                  <a href="#paper">Paper</a>
+               </li>
+               <li>
+                  <a href="#plast">Plastics</a>
+               </li>
+               <li>
+                  <a href="#glass">Glass</a>
+               </li>
+               <li>
+                  <a href="#batt">Batteries</a>
+               </li>
+               <li>
+                  <a href="#hhw">Household Hazerdous Waste</a>
+               </li>
+               <li>
+                  <a href="#mvw">Motor Vehicle Waste (Oils and Tires)</a>
+               </li>
+            </ol>
+            <hr>
+            <h3 class="type-title">
+               <a id="paper" name="paper"></a>
+               Paper
+            </h3>
+            <p class="type-paragraph">
+               Paper accounts for 23 percent of municipal solid waste (trash) generated each year, more than any other material. 
+               Americans recycled about 68 percent of the paper they used in 2018. This recovered paper is used to make new paper products, saving trees and other natural resources. 
+               Most community or office recycling programs accept paper and paper products. Check what your community or office program accepts before you put it in the trash can. 
+               When you go shopping, look for products that are made from recycled paper.
+            </p>
+            <h4 class="type-title"> <strong>Wrap and Gift Bags</strong></h4>
+            <p class="type-paragraph">
+               As the holiday season approaches, Americans will be looking to spread happiness by giving gifts to their families and loved ones. 
+               However, every season Americans unknowingly wreak havoc on their local recycling facilities by placing the wrong items in their blue recycling carts.
+               If you use gift wrap, look to find a type that can be recycled or that is made from recycled content. A lot of gift wrap isn’t recyclable because of the coating on the paper, which is often shiny and laminated.
+               Check with your local recycling provider first to be certain and for the best ways to dispose of wrapping paper. 
+               We recommend reusing gift bags and picking up recyclable gift wraps to do your part to keep the earth clean this holiday season. 
+            </p>
+            <hr>
+            <h3 class="type-title">
+               <a id="plast" name="plast"></a>
+               Plastics
+            </h3>
+            <p class="type-paragraph">
+               More than 35 million tons of plastics were generated in the United States in 2018, which was about 12 percent of the waste stream. 
+               Only 8.7 percent of plastics were recycled in 2018. Some types of plastics are recycled much more than others. Most community recycling programs accept some, but not all, types of plastics. 
+               Look for products made from recycled plastic materials.
+            </p>
+            <p class="type-paragraph">
+               <strong>What do the symbols on plastic bottles and containers mean?</strong> These symbols were created by plastic manufacturers to help people identify
+               the kind of plastic used to make the container. These symbols can help you determine if the container can be accepted by your local recycling program.
+               The type of resin used to make the plastic is designated a number. This number is contained in a triangle that looks very similar to the recycling logo.
+               Ask your local recycling center if the type of plastic you have can be recycled at their facility. 
+            </p>
+            <img id="plastic-type" src="images/plastic_type.png"> 
+            <hr>
+            <h3 class="type-title">
+               <a id="glass" name="glass"></a>
+               Glass
+            </h3>
+            <p class="type-paragraph">
+               Glass, especially glass food and beverage containers, can be recycled over and over again. In the United States in 2018, 12.3 million tons of glass were generated, only 25 percent of which was recovered for recycling. 
+               Making new glass from recycled glass is typically cheaper than using raw materials. Most curbside community recycling programs accept different glass colors and types mixed together, and then glass is sorted at the recovery facility. 
+               Check with your local program to see if you need to separate your glass or if it can be mixed together.
+            </p>
+            <hr>
+            <h3 class="type-title">
+               <a id="batt" name="batt"></a>
+               Batteries
+            </h3>
+            <p class="type-paragraph">
+               One of the most recycled products are lead-acid batteries, with 2.9 million recycled in 2018, representing 99 percent of generation. Although batteries are recyclable, most batteries, including lithium-ion, lithium metal, lead-acid, nickel cadmium, and other rechargeable batteries, should NOT go in household garbage or recycling bins. 
+               These waste batteries require special handling and should be taken to specialty drop-off locations or household hazardous waste collection points. Utilize our disposal locations feature to find the nearest appropriate disposal facility. 
+            </p>
+            <ul id="waste-types">
+               <li>
+                  <strong>Dry Cell Batteries</strong> are used in a variety of electronics and include alkaline and carbon zinc (9-volt, D, C, AA, AAA), mercuric-oxide (button, some cylindrical and rectangular), and silver-oxide and zinc-air (button). 
+                  Look for in-store recycling bins or community collection events to dispose of these batteries.
+               </li>
+               <li class="battary-list-items"> 
+                  <strong>Lithium-ion Batteries</strong> are used in many rechargeable products such as electronics, toys, wireless headphones, handheld power tools, small and large appliances, electric vehicles, and electrical energy storage systems. 
+                  Do not put them in the trash or municipal recycling bins. Household lithium-ion batteries can be brought to dedicated in-store recycling bins or household hazardous waste collection events for disposal. Medium- and large-scale electric vehicle or energy storage batteries 
+                  should be returned to the manufacturer, automobile dealer, or installation company for management at end of life.
+               </li>
+               <li class="battary-list-items">
+                  <strong>Lithium Metal Batteries</strong> are similar to lithium-ion batteries but are not rechargeable. They are commonly used in products such as cameras, watches, remote controls, handheld games, and smoke detectors. Do not put them in the trash or municipal recycling bins: 
+                  look for dedicated in-store recycling bins or household hazardous waste collection events for disposal.
+               </li>
+               <li class="battary-list-items">
+                  <strong>Lead Acid Batteries</strong> can be found in automobiles, boats, snowmobiles, motorcycles, golf carts, wheelchairs, and other large transportation vehicles. Return lead-acid batteries to a battery retailer or local household hazardous waste collection program; 
+                  do not put lead-acid batteries in the trash or municipal recycling bins.
+               </li>
+               <li class="battary-list-items">
+                  <strong>Other Rechargeable Batteries</strong> include nickel cadmium, nickel metal hydride, and nickel-zinc batteries. These batteries can be found in cordless power tools, cordless phones, cell phones, digital cameras, and small electronics. Do not put these rechargeable batteries in the trash or municipal recycling bins: 
+                  look for dedicated in-store recycling bins or household hazardous waste collection events for disposal.
+               </li>
+            </ul>
+            <hr>
+            <h3 class="type-title">
+               <a id="hhw" name="hhw"></a>
+               Household Hazerdous Waste
+            </h3>
+            <p class="type-paragraph">
+               Leftover household products that contain corrosive, toxic, ignitable, or reactive ingredients are considered to be household hazardous waste (HHW). Products such as paints, cleaners, oils, batteries, and pesticides that contain potentially hazardous ingredients require special care when you dispose of them. 
+               HHW may be dangerous to people or bad for the environment if poured down the drain, dumped on the ground, or thrown out with regular trash.
+            </p>
+            <p class="type-paragraph">
+               What can you do?
+            </p>
+            <ul id="waste-types">
+               <li>
+                  Try to mitigate the purchase of these types of products and look for alternate, non-hazardous, products.
+               </li>
+               <li class="battary-list-items">
+                  When the need to dispose of these products arises, look for special collection events in your community or permanent collection centers. 
+                  Sometimes the businesses that sells these products will also accept them for recycling.
+               </li>
+               <li class="battary-list-items">
+                  If you have to dispose of HHW, first check with your local waste management agency to see what rules apply in your community.
+               </li>
+            </ul>
+            <hr>
+            <h3 class="type-title">
+               <a id="mvw" name="mvw"></a>
+               Motor Vehicle Waste
+            </h3>
+            <h4 style="margin-top: 20px; margin-left: 250px;"> <strong>Oils</strong></h4>
+            <p class="type-paragraph">
+               Never dump your used motor oil down the drain — the used oil from one oil change can contaminate one million gallons of fresh water. 
+               By recycling your used oil you not only help keep our water supply clean, but help reduce American dependence on foreign oil.
+               It takes 42 gallons of crude oil, but only one gallon of used oil, to produce 2.5 quarts of new motor oil. 
+               Many garages and auto-supply stores that sell motor oil also accept oil for recycling.
+            </p>
+            <h4 style="margin-top: 20px; margin-left: 250px;"> <strong>Tires</strong></h4>
+            <p class="type-paragraph">
+               Most garages are required to accept and recycle your used tires when you have new ones installed. You may be able to return used tires to either a tire retailer or a local recycling facility that accepts tires. 
+               Some communities will hold collection events for used tires.
+            </p>
+            <p style="margin-left: 250px; margin-bottom: 50px; font-size: 17px;">
+               Utilize our disposal facility locator to find the nearest waste disposal and recycling centers.
+            </p>
+         </div>
+         <!-- help menu -->
+         <div v-if="curPage=='helpMenu'">
+            <button type="button" class="btn btn-success" style="margin: 10px; position: relative;" v-on:click="curPage='main';">Home</button>
+            <h1 id="tutorial-title">Help Center</h1>
+            <div id="container-div">
+               <div class="help-container">
+                  <h3 style="color: white;">Viewing Nearby Disposal Locations</h3>
+                  <p class="help-menu-text">
+                     Click the view nearby disposal button to pull up the disposal facility locator page. 
+                     Utilize the filters to narrow and customize your search to the type of trash you are trying to dispose of. 
+                     Type in the furthest distance you want to travel (in miles) and the map will take you there!
+                  </p>
+                  <button type="button" class="help-btn" v-on:click="curPage='locate'; showMap();">View Nearby Disposal Locations</button>
+               </div>
+               <div class="help-container">
+                  <h3 style="color: white;">User Entered Disposal Locations</h3>
+                  <p class="help-menu-text">
+                     Found a new disposal center not shown on the maps? Share it with other users utilizing the app as well! 
+                     The location does not have to be an official recycling center or garbage disposal facility. If you found a 
+                     a new recycling can or trash can you can mark these as new disposal locations as well.
+                  </p> 
+                  <button type="button" class="help-btn" v-on:click="curPage='submitLoc';">Submit New Disposal Locations</button>
+               </div>
+               <div class="help-container">
+                  <h3 style="color: white;">What Do I recycle and How?</h3> 
+                  <p class="help-menu-text">
+                     New to recycling or don't know the proper protocols for recycling certain materials? Don't Worry we got you! 
+                     Go to our tutorial page to learn about common household recyclable items. We break them down into the main 
+                     categories and provide insight on where and how to recycle certain items. 
+                  </p>
+                  <button type="button" class="help-btn" v-on:click="curPage='tutorial';">What Do I Recycle and How?</button>
+               </div>
+            </div>
+         </div>
+         <!-- submit user locations -->
+         <div v-if="curPage=='submitLoc'">
 
+         </div>
+         <!-- current disposal locations -->
          <div v-if="curPage=='locate'" id="locate">
             <div class="row">
                <div class="col-lg-4">
-                  <button type="button" class="btn btn-success" v-on:click="curPage='main'; hideMap();">Home</button>
+                  <button type="button" class="btn btn-success" style="margin: 20px;" v-on:click="curPage='main'; hideMap();">Home</button>
                </div>
                <div class="col-lg-4 text-center">
                   <br><br>

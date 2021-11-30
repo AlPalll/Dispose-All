@@ -221,7 +221,7 @@
          </div>
          <!-- submit user locations -->
          <div v-if="curPage=='submitLoc'">
-            <button type="button" class="btn btn-success" style="margin: 10px; position: fixed;" v-on:click="curPage='main';">Home</button>
+            <button type="button" class="btn btn-success" style="margin: 10px; position: fixed;" v-on:click="curPage='main'; hideMap();">Home</button>
          </div>
          <!-- current disposal locations -->
          <div v-if="curPage=='locate'" id="locate">

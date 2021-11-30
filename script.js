@@ -234,7 +234,7 @@ function getInfo(mark, msg){
 function addInfoWindow(marker, message, lnk) {
 	const cont = 
 		'<p>' + message + ' </p>' +
-		'<a href="' + lnk + '"> Get Directions</a>'
+		'<a href="' + lnk + '" target="_blank" rel="noopener noreferrer"> Get Directions</a>'
 	var infoWindow = new google.maps.InfoWindow({
 		content: cont
 	});

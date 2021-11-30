@@ -30,6 +30,10 @@ var resultView = new Vue({
     },
 
     withinUserRange(lat, lng) {
+      if (!this.locateDistance) {
+        return true;
+      }
+
       let RADIUS = 6371; // Radius of the earth in km
       let dLat = this.degToRad(lat-crd.latitude);  // degToRad below
       let dLon = this.degToRad(lng-crd.longitude); 
@@ -58,7 +62,7 @@ var resultView = new Vue({
 
       for (i = 0; i < Object.keys(response.data.values).length; ++i) {
         let valid = true;
-        let options = ['landfill', 'recycle', 'bottle', 'can', 'chemical', 'electronic']
+        let options = ['landfill', 'recycle', 'bottle', 'metal', 'chemical', 'electronic']
 
         //Check if types match user options
         for (j = 0; j < 6; ++j) {

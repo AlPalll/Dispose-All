@@ -113,13 +113,7 @@ var options = {
 var crd;
 function success(pos) {
 	crd = pos.coords;
-
-	console.log('Your current position is:');
-	console.log(`Latitude : ${crd.latitude}`);
-	console.log(`Longitude: ${crd.longitude}`);
-	console.log(`More or less ${crd.accuracy} meters.`);
 }
-
 function error(err) {
 	console.warn(`ERROR(${err.code}): ${err.message}`);
 }
@@ -130,9 +124,16 @@ function initMarkers() {
 		markers[i] = new google.maps.Marker({
 			position: { lat: parseFloat(resultView.locateResults[i][1]), lng: parseFloat(resultView.locateResults[i][2])},
 			map: map,
-			id: parseInt(resultView.locateResults[i][0]),
+			id: i,
 			icon: img,
 		});
+		const msg = getInfo(resultView.locateResults[i], "<b>This disposal takes: </b>");
+		const mapLink = 
+			"https://www.google.com/maps/dir/?api=1" +
+			"&origin=" + crd.latitude + "%2C" + crd.longitude +
+			"&destination=" + parseFloat(resultView.locateResults[i][1]) + "%2C" + parseFloat(resultView.locateResults[i][2]) +
+			"&travelmode=walking";
+		addInfoWindow(markers[i], msg, mapLink);
 	};
 }
 navigator.geolocation.getCurrentPosition(success, error, options);
@@ -148,7 +149,7 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
 function initMap() {
 	map = new google.maps.Map(document.getElementById("map"), {
 		center: { lat: crd.latitude, lng: crd.longitude},
-		zoom: 18,
+		zoom: 16,
 	});
 	infoWindow = new google.maps.InfoWindow();
 
@@ -204,4 +205,41 @@ function findIcon(mark){
 		x = "images/electronics.png";
 	}
 	return x;
+}
+// Marker Info
+function getInfo(mark, msg){
+	var arr = []
+	console.log(mark);
+	if(mark[3] == "TRUE"){
+		arr.push("Landfill");
+	}
+	if(mark[4] == "TRUE"){
+		arr.push("Recyclables");
+	}
+	if(mark[5] == "TRUE"){
+		arr.push("Bottles");
+	}
+	if(mark[6] == "TRUE"){
+		arr.push("Metals");
+	}
+	if(mark[7] == "TRUE"){
+		arr.push("Chemicals");
+	}
+	if(mark[8] == "TRUE"){
+		arr.push("Electronics");
+	}
+	var addText = arr.join(", ")
+	return msg + addText;
+}
+function addInfoWindow(marker, message, lnk) {
+	const cont = 
+		'<p>' + message + ' </p>' +
+		'<a href="' + lnk + '"> Get Directions</a>'
+	var infoWindow = new google.maps.InfoWindow({
+		content: cont
+	});
+
+	google.maps.event.addListener(marker, 'click', function () {
+		infoWindow.open(map, marker);
+	});
 }

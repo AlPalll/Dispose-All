@@ -120,6 +120,7 @@ function success(pos) {
 }
 function error(err) {
 	console.warn(`ERROR(${err.code}): ${err.message}`);
+	crd = {latitude: 42.29208364363135, longitude: -83.71624887321929};
 }
 function initMarkers() {
 	// loop through locateResults

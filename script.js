@@ -137,8 +137,7 @@ function initMarkers() {
 		const mapLink = 
 			"https://www.google.com/maps/dir/?api=1" +
 			"&origin=" + crd.latitude + "%2C" + crd.longitude +
-			"&destination=" + parseFloat(resultView.locateResults[i][1]) + "%2C" + parseFloat(resultView.locateResults[i][2]) +
-			"&travelmode=walking";
+			"&destination=" + parseFloat(resultView.locateResults[i][1]) + "%2C" + parseFloat(resultView.locateResults[i][2]);
 		addInfoWindow(markers[i], msg, mapLink);
 	};
 }

@@ -26,7 +26,7 @@
             <div id="menuBtns">
                <div class="btn-group-vertical btn-group-lg">
                   <button type="button" class="btn btn-success" style="margin-bottom: 40px;" v-on:click="curPage='locate'; showMap();">View Nearby Disposal Locations</button>
-                  <button type="button" class="btn btn-success" style="margin-bottom: 40px;" v-on:click="curPage='submitLoc'">Submit New Disposal Locations</button>
+                  <button type="button" class="btn btn-success" style="margin-bottom: 40px;" v-on:click="curPage='submitLoc'; showMap()">Submit New Disposal Locations</button>
                   <button type="button" class="btn btn-success" style="margin-bottom: 40px;" v-on:click="curPage='tutorial';">What Do I Recycle and How?</button>
                   <button type="button" class="btn btn-success" style="margin-bottom: 40px;" v-on:click="curPage='helpMenu';">Need Help?</button>
                </div>
@@ -221,7 +221,7 @@
          </div>
          <!-- submit user locations -->
          <div v-if="curPage=='submitLoc'">
-
+            <button type="button" class="btn btn-success" style="margin: 10px; position: fixed;" v-on:click="curPage='main';">Home</button>
          </div>
          <!-- current disposal locations -->
          <div v-if="curPage=='locate'" id="locate">

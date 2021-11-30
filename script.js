@@ -168,7 +168,99 @@ function initMap() {
 	locationButton.classList.add("custom-map-control-button");
 	map.controls[google.maps.ControlPosition.TOP_CENTER].push(locationButton);
 	locationButton.addEventListener("click", function() {map.setCenter({ lat: crd.latitude, lng: crd.longitude})});
+
+  const image = 'images/landfill.png'
+
+  google.maps.event.addListener(map, 'click', function(event) {
+    //make sure to record lat and long to put into database
+    //REMOVE
+    //alert(event.latLng.lat() + ", " + event.latLng.lng());
+    addMarker(event.latLng, map, image);
+    newMarkerData(event.latLng);
+    });
 }
+
+//adds marker to the map and then to database
+function addMarker(location, map, image) {
+    new google.maps.Marker({
+      position: location,
+      //label: labels[labelIndex++ % labels.length],
+      map: map,
+      icon: image,
+  });
+}
+
+//sends new marker to database
+function newMarkerData(location) {
+  fetch(`https://sheets.googleapis.com/v4/spreadsheets/1w8qms9wIXwbTyU_N0tBiNIii3t3-t_OIwmKTX6RSc08:batchUpdate`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer ya29.a0ARrdaM_U3Z8OKXG9go5KpWNdGM9roaBZ9ieIMW_c3-gcZwtevmFwRON3Pc9rr6vQYmsfgwDtznUnPXyNp9qYT8JMds-_HwnH4C4GzDK_Ps1G7qrCOxQLnGGnlN2YlHZ-q3wdkVaSQjtcWeBa-HHmX0hVODHB",
+    },
+    body: JSON.stringify({
+
+      requests: [{
+        appendCells: {
+          sheetId: 0,
+          rows: [ {
+            values: [
+              {
+                userEnteredValue: {
+                  numberValue: markers.length + 1
+                }
+              },
+              {
+                userEnteredValue: {
+                  numberValue: location.lat()
+                }
+              },
+              {
+                userEnteredValue: {
+                  numberValue: location.lng()
+                },
+              },
+              {
+                userEnteredValue: {
+                  boolValue: true
+                }
+              },
+              {
+                userEnteredValue: {
+                  boolValue: false
+                }
+              },
+              {
+                userEnteredValue: {
+                  boolValue: false
+                }
+              },
+              {
+                userEnteredValue: {
+                  boolValue: false
+                }
+              },
+              {
+                userEnteredValue: {
+                  boolValue: false
+                }
+              },
+              {
+                userEnteredValue: {
+                  boolValue: false
+                }
+              },
+            ]
+          }],
+          fields: "*"
+        },
+        },
+      ],
+    }
+  )
+  })
+}
+
 // Sets the map on all markers in the array.
 function setMapOnAll(map) {
   for (let i = 0; i < markers.length; i++) {

@@ -248,8 +248,8 @@
                <button v-else type="button" class="btn btn-outline-success" v-on:click="addLocateOption('recycle')">Recycle</button>
                <button v-if="locateOptions.has('bottle')"type="button" class="btn btn-success" v-on:click="removeLocateOption('bottle')">Bottle</button>
                <button v-else type="button" class="btn btn-outline-success"  v-on:click="addLocateOption('bottle')">Bottle</button>
-               <button v-if="locateOptions.has('can')"type="button" class="btn btn-success" v-on:click="removeLocateOption('can')">Metal</button>
-               <button v-else type="button" class="btn btn-outline-success" v-on:click="addLocateOption('can')">Metal</button>
+               <button v-if="locateOptions.has('metal')"type="button" class="btn btn-success" v-on:click="removeLocateOption('metal')">Metal</button>
+               <button v-else type="button" class="btn btn-outline-success" v-on:click="addLocateOption('metal')">Metal</button>
                <button v-if="locateOptions.has('chemical')"type="button" class="btn btn-success" v-on:click="removeLocateOption('chemical')">Chemical</button>
                <button v-else type="button" class="btn btn-outline-success" v-on:click="addLocateOption('chemical')">Chemical</button>
                <button v-if="locateOptions.has('electronic')"type="button" class="btn btn-success" v-on:click="removeLocateOption('electronic')">Electronic</button>

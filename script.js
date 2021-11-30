@@ -97,6 +97,7 @@ var resultView = new Vue({
 
   }
 })
+
 let infoWindow;
 let map;
 let marker; // this is just the center marker
@@ -156,7 +157,11 @@ function initMap() {
 		center: { lat: crd.latitude, lng: crd.longitude},
 		zoom: 16,
 	});
-	infoWindow = new google.maps.InfoWindow();
+	marker = new google.maps.Marker({
+			position: { lat: crd.latitude, lng: crd.longitude},
+			map: map,
+			icon: "images/user.png",
+		});
 
 	const locationButton = document.createElement("button");
 

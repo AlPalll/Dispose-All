@@ -169,17 +169,22 @@ function initMap() {
 	map.controls[google.maps.ControlPosition.TOP_CENTER].push(locationButton);
 	locationButton.addEventListener("click", function() {map.setCenter({ lat: crd.latitude, lng: crd.longitude})});
 
-  const image = 'images/landfill.png'
+  
+}
+function submitListener(){
+	const image = 'images/landfill.png'
 
-  google.maps.event.addListener(map, 'click', function(event) {
-    //make sure to record lat and long to put into database
-    //REMOVE
-    //alert(event.latLng.lat() + ", " + event.latLng.lng());
-    addMarker(event.latLng, map, image);
-    newMarkerData(event.latLng);
+	var listener1 = google.maps.event.addListener(map, 'click', function(event) {
+		//make sure to record lat and long to put into database
+		//REMOVE
+		//alert(event.latLng.lat() + ", " + event.latLng.lng());
+		addMarker(event.latLng, map, image);
+		newMarkerData(event.latLng);
     });
 }
-
+function delListener(){
+	google.maps.event.removeListener(listener1);
+}
 //adds marker to the map and then to database
 function addMarker(location, map, image) {
     new google.maps.Marker({

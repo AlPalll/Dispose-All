@@ -26,7 +26,7 @@
             <div id="menuBtns">
                <div class="btn-group-vertical btn-group-lg">
                   <button type="button" class="btn btn-success" style="margin-bottom: 40px;" v-on:click="curPage='locate'; showMap();">View Nearby Disposal Locations</button>
-                  <button type="button" class="btn btn-success" style="margin-bottom: 40px;" v-on:click="curPage='submitLoc'; showMap()">Submit New Disposal Locations</button>
+                  <button type="button" class="btn btn-success" style="margin-bottom: 40px;" v-on:click="curPage='submitLoc'; showMap(); submitListener();">Submit New Disposal Locations</button>
                   <button type="button" class="btn btn-success" style="margin-bottom: 40px;" v-on:click="curPage='tutorial';">What Do I Recycle and How?</button>
                   <button type="button" class="btn btn-success" style="margin-bottom: 40px;" v-on:click="curPage='helpMenu';">Need Help?</button>
                </div>
@@ -206,7 +206,7 @@
                      The location does not have to be an official recycling center or garbage disposal facility. If you found a 
                      a new recycling can or trash can you can mark these as new disposal locations as well.
                   </p> 
-                  <button type="button" class="help-btn" v-on:click="curPage='submitLoc';">Submit New Disposal Locations</button>
+                  <button type="button" class="help-btn" v-on:click="curPage='submitLoc'; showMap(); submitListener();">Submit New Disposal Locations</button>
                </div>
                <div class="help-container">
                   <h3 style="color: white;">What Do I recycle and How?</h3> 
@@ -221,7 +221,7 @@
          </div>
          <!-- submit user locations -->
          <div v-if="curPage=='submitLoc'">
-            <button type="button" class="btn btn-success" style="margin: 10px; position: fixed;" v-on:click="curPage='main'; hideMap();">Home</button>
+            <button type="button" class="btn btn-success" style="margin: 10px; position: fixed;" v-on:click="curPage='main'; hideMap(); delListener();">Home</button>
          </div>
          <!-- current disposal locations -->
          <div v-if="curPage=='locate'" id="locate">

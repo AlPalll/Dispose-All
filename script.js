@@ -7,8 +7,24 @@ var resultView = new Vue({
     locateOptions: new Set(),
     locateDistance: 0,
     locateResults: [],
+	submission: {
+	  id: 0,
+	  latitude: 0,
+	  longitude: 0,
+	  landfill: 'TRUE',
+	  recycle: 'FALSE',
+	  bottle: 'FALSE',
+	  metals: 'FALSE',
+	  chemical: 'FALSE',
+	  electronic: 'FALSE',
+	  description: 'user submitted',
+	}
   },
   methods: {
+	resetLocateOptions() {
+		this.locateOptions = new Set();
+		this.$forceUpdate();
+	},
     addLocateOption(option) {
       this.locateOptions.add(option)
       this.$forceUpdate();
@@ -83,15 +99,20 @@ var resultView = new Vue({
       }
       console.log('Locate Results:')
       console.log(this.locateResults);
-	  deleteMarkers();
+	  deleteMarkers(markers);
 	  initMarkers();
     },
 	showMap() {
 		document.getElementById( 'map' ).style.display = "block";
+		document.getElementById( 'legend' ).style.display = "block";
 		initMap();
+		initLegend();
+		this.handleLocate();
 	},
 	hideMap() {
 		document.getElementById( 'map' ).style.display = "none";
+		document.getElementById( 'legend' ).style.display = "none";
+		google.maps.event.clearInstanceListeners(map);
 	}
 	
 
@@ -102,6 +123,9 @@ let infoWindow;
 let map;
 let marker; // this is just the center marker
 let markers = []
+let subMarkers = [];
+let subMarker;
+let subSelected = false;
 // temporary marker array
 let disposals = [
 	{ lat: 42.2921, lng: -83.71585 },
@@ -163,119 +187,143 @@ function initMap() {
 		});
 
 	const locationButton = document.createElement("button");
-
+	locationButton.style.marginBottom = "8px";
+	locationButton.style.backgroundColor = "#28a745";
+	locationButton.style.color = "#fff";
+	locationButton.style.fontFamily = "Roboto,Arial,sans-serif";
+	locationButton.style.fontSize = "16px";
+	locationButton.style.border = "2px solid #28a745";
+	locationButton.style.borderRadius = "3px";
+	locationButton.style.boxShadow = "0 2px 6px rgba(0,0,0,.3)";
+	locationButton.style.cursor = "pointer";
 	locationButton.textContent = "Pan to Current Location";
 	locationButton.classList.add("custom-map-control-button");
-	map.controls[google.maps.ControlPosition.TOP_CENTER].push(locationButton);
+	map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(locationButton);
 	locationButton.addEventListener("click", function() {map.setCenter({ lat: crd.latitude, lng: crd.longitude})});
 
-  
 }
+let legend = document.getElementById("legend");
+function initLegend(){ 
+	map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(legend);
+}
+
 function submitListener(){
-	const image = 'images/landfill.png'
+	const centerControlDiv = document.createElement("div");
+
+	CenterControl(centerControlDiv, map);
+	map.controls[google.maps.ControlPosition.TOP_CENTER].push(centerControlDiv);
 
 	var listener1 = google.maps.event.addListener(map, 'click', function(event) {
 		//make sure to record lat and long to put into database
 		//REMOVE
 		//alert(event.latLng.lat() + ", " + event.latLng.lng());
-		addMarker(event.latLng, map, image);
-		newMarkerData(event.latLng);
+		const img = findIcon2(resultView.submission);
+		addMarker(event.latLng, map, img);
     });
 }
 function delListener(){
 	google.maps.event.removeListener(listener1);
 }
 //adds marker to the map and then to database
-function addMarker(location, map, image) {
-    new google.maps.Marker({
-      position: location,
-      //label: labels[labelIndex++ % labels.length],
-      map: map,
-      icon: image,
+function addMarker(loc, map, img) {
+	resultView.submission.latitude = loc.lat();
+	resultView.submission.longitude = loc.lng();
+	if (subSelected == true){
+		subMarker.setPosition(loc);
+		subMarker.setIcon(img);
+	}
+	else {
+		subSelected = true;
+		subMarker = new google.maps.Marker({
+			position: loc,
+			icon: img,
+			map: map,
+		});
+	}
+	
+}
+function CenterControl(controlDiv, map) {
+  // Set CSS for the control border.
+  const controlUI = document.createElement("div");
+
+  controlUI.style.backgroundColor = "#FF0000";
+  controlUI.style.border = "2px solid #fff";
+  controlUI.style.borderRadius = "3px";
+  controlUI.style.boxShadow = "0 2px 6px rgba(0,0,0,.3)";
+  controlUI.style.cursor = "pointer";
+  controlUI.style.marginTop = "8px";
+  controlUI.style.marginBottom = "22px";
+  controlUI.style.textAlign = "center";
+  controlUI.title = "Click to submit selected location";
+  controlDiv.appendChild(controlUI);
+
+  // Set CSS for the control interior.
+  const controlText = document.createElement("div");
+
+  controlText.style.color = "#fff";
+  controlText.style.fontFamily = "Roboto,Arial,sans-serif";
+  controlText.style.fontSize = "20px";
+  controlText.style.lineHeight = "38px";
+  controlText.style.paddingLeft = "5px";
+  controlText.style.paddingRight = "5px";
+  controlText.innerHTML = "Submit";
+  controlUI.appendChild(controlText);
+  
+  controlUI.addEventListener("click", () => {
+	submitHelper();
   });
 }
-
-//sends new marker to database
-function newMarkerData(location) {
-  fetch(`https://sheets.googleapis.com/v4/spreadsheets/1w8qms9wIXwbTyU_N0tBiNIii3t3-t_OIwmKTX6RSc08:batchUpdate`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer ya29.a0ARrdaM_U3Z8OKXG9go5KpWNdGM9roaBZ9ieIMW_c3-gcZwtevmFwRON3Pc9rr6vQYmsfgwDtznUnPXyNp9qYT8JMds-_HwnH4C4GzDK_Ps1G7qrCOxQLnGGnlN2YlHZ-q3wdkVaSQjtcWeBa-HHmX0hVODHB",
-    },
-    body: JSON.stringify({
-
-      requests: [{
-        appendCells: {
-          sheetId: 0,
-          rows: [ {
-            values: [
-              {
-                userEnteredValue: {
-                  numberValue: markers.length + 1
-                }
-              },
-              {
-                userEnteredValue: {
-                  numberValue: location.lat()
-                }
-              },
-              {
-                userEnteredValue: {
-                  numberValue: location.lng()
-                },
-              },
-              {
-                userEnteredValue: {
-                  boolValue: true
-                }
-              },
-              {
-                userEnteredValue: {
-                  boolValue: false
-                }
-              },
-              {
-                userEnteredValue: {
-                  boolValue: false
-                }
-              },
-              {
-                userEnteredValue: {
-                  boolValue: false
-                }
-              },
-              {
-                userEnteredValue: {
-                  boolValue: false
-                }
-              },
-              {
-                userEnteredValue: {
-                  boolValue: false
-                }
-              },
-            ]
-          }],
-          fields: "*"
-        },
-        },
-      ],
-    }
-  )
-  })
+function submitHelper(){
+	const data = resultView.submission;
+	if(subSelected == false){
+		alert("No location selected. Please select a location from the map to submit.");
+	}
+	else {
+		// Add one line to the sheet
+		fetch("https://sheet.best/api/sheets/097b1968-d3ab-42f9-8497-aacb94b246b6", {
+		  method: "POST",
+		  mode: "cors",
+		  headers: {
+			"Content-Type": "application/json",
+		  },
+		  body: JSON.stringify(data),
+		})
+		  .then((r) => r.json())
+		  .then((data) => {
+			// The response comes here
+			alert("Disposal location submitted! Returning to main page.")
+			resetSubmit();
+			resultView.curPage = 'main';
+			resultView.hideMap();
+			subSelected = false;
+		  })
+		  .catch((error) => {
+			// Errors are reported there
+			console.log(error);
+		  });
+	}
+	
 }
-
+function resetSubmit(){
+	resultView.submission.latitude = 0;
+	resultView.submission.longitude = 0;
+	resultView.submission.landfill = 'TRUE';
+	resultView.submission.recycle = 'FALSE';
+	resultView.submission.bottle = 'FALSE';
+	resultView.submission.metals = 'FALSE';
+	resultView.submission.chemical = 'FALSE';
+	resultView.submission.electronic = 'FALSE';
+}
 // Sets the map on all markers in the array.
-function setMapOnAll(map) {
+function setMapOnAll(map,m) {
   for (let i = 0; i < markers.length; i++) {
-    markers[i].setMap(map);
+    m[i].setMap(map);
   }
 }
 
 // Removes the markers from the map, but keeps them in the array.
-function hideMarkers() {
-  setMapOnAll(null);
+function hideMarkers(m) {
+  setMapOnAll(null,m);
 }
 
 // Shows any markers currently in the array.
@@ -284,9 +332,9 @@ function showMarkers() {
 }
 
 // Deletes all markers in the array by removing references to them.
-function deleteMarkers() {
-  hideMarkers();
-  markers = [];
+function deleteMarkers(m) {
+  hideMarkers(m);
+  m = [];
 }
 
 // Marker Icon
@@ -312,10 +360,31 @@ function findIcon(mark){
 	}
 	return x;
 }
+function findIcon2(submission){
+	var x;
+	if(submission.landfill == "TRUE"){
+		x = "images/landfill.png";
+	}
+	if(submission.recycle == "TRUE"){
+		x = "images/recycle.png";
+	}
+	if(submission.bottle == "TRUE"){
+		x = "images/bottles.png";
+	}
+	if(submission.metals == "TRUE"){
+		x = "images/metals.png";
+	}
+	if(submission.chemical == "TRUE"){
+		x = "images/chemicals.png";
+	}
+	if(submission.electronic == "TRUE"){
+		x = "images/electronics.png";
+	}
+	return x;
+}
 // Marker Info
 function getInfo(mark, msg){
 	var arr = []
-	console.log(mark);
 	if(mark[3] == "TRUE"){
 		arr.push("Landfill");
 	}

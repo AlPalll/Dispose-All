@@ -31,6 +31,19 @@
                   <button type="button" class="btn btn-success" style="margin-bottom: 40px;" v-on:click="curPage='helpMenu';">Need Help?</button>
                </div>
             </div>
+            <div id="stats">
+               Disposal Locations Submitted: {{ stats[0] }}
+               <br>
+               <div id="subStats">
+                  | <img class="statsImg" src="images/landfill.png"></img>  Landfill: {{ stats[1] }} |
+                   <img class="statsImg" src="images/recycle.png"></img>  Recycle: {{ stats[2] }} |
+                   <img class="statsImg" src="images/bottles.png"></img>  Bottle: {{ stats[3] }} |
+                  
+                   <img class="statsImg" src="images/metals.png"></img>  Metal: {{ stats[4] }} |
+                   <img class="statsImg" src="images/chemicals.png"></img>  Chemical: {{ stats[5] }} |
+                   <img class="statsImg" src="images/electronics.png"></img>  Electronic: {{ stats[6] }} |
+               </div>
+            </div>
          </div>
          <!-- tutorial -->
          <div v-if="curPage=='tutorial'">

@@ -38,6 +38,29 @@ body {
     text-align: center;
     margin-top: 50px;
     color: #009900;
+    font-size: 250%;
+    font-weight: normal;
+}
+
+#stats {
+    text-align: center;
+    margin-top: 20px;
+    color: #009900;
+    font-size: 200%;
+    font-weight: normal;
+}
+
+#subStats {
+    text-align: center;
+    margin-top: 20px;
+    color: #009900;
+    font-size: 90%;
+    font-weight: normal;
+}
+
+.statsImg {
+    height: 45px;
+    width: auto;
 }
 
 #menuBtns {

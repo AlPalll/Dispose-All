@@ -7,8 +7,47 @@ var resultView = new Vue({
     locateOptions: new Set(),
     locateDistance: 0,
     locateResults: [],
+    stats: [0, 0, 0, 0, 0, 0, 0],
+  },
+  mounted() {
+    this.getStats();
   },
   methods: {
+    getStats() {
+      console.log('Running!!!')
+      axios
+          .get('https://sheets.googleapis.com/v4/spreadsheets/1w8qms9wIXwbTyU_N0tBiNIii3t3-t_OIwmKTX6RSc08/values/Locations?key=AIzaSyAyPyz8Df6KljEVecXIsxRRNhEe1QmRTMA')
+          .then(response => (this.calcStats(response)));
+    },
+
+    calcStats(response) {
+      this.stats[0] = response.data.values.length - 1
+      for (i = 1; i < 7; ++i) {
+        this.stats[i] = 0
+      }
+      for (i = 1; i < Object.keys(response.data.values).length; ++i) {
+          if (response.data.values[i][3] == "TRUE") {
+            this.stats[1] += 1
+          }
+          if (response.data.values[i][4] == "TRUE") {
+            this.stats[2] += 1
+          }
+          if (response.data.values[i][5] == "TRUE") {
+            this.stats[3] += 1
+          }
+          if (response.data.values[i][6] == "TRUE") {
+            this.stats[4] += 1
+          }
+          if (response.data.values[i][7] == "TRUE") {
+            this.stats[5] += 1
+          }
+          if (response.data.values[i][8] == "TRUE") {
+            this.stats[6] += 1
+          }
+      }
+      this.$forceUpdate();
+    },
+
     addLocateOption(option) {
       this.locateOptions.add(option)
       this.$forceUpdate();

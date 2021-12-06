@@ -234,17 +234,48 @@
          </div>
          <!-- submit user locations -->
          <div v-if="curPage=='submitLoc'">
-            <button type="button" class="btn btn-success" style="margin: 10px; position: fixed;" v-on:click="curPage='main'; hideMap(); delListener();">Home</button>
+            
+			<div class="row">
+               <div class="col-lg-4">
+                  <button type="button" class="btn btn-success" style="margin: 10px; position: fixed;" v-on:click="curPage='main'; hideMap();">Home</button>
+               </div>
+               <div class="col-lg-4 text-center">
+                  <br>
+                  <h1 style="color:#009900;font-size: 40px;">Submit Disposal</h1>
+                  <br>
+                  <h4 style="color:#009900;"> Select disposal type(s): </h4>
+                  
+               </div>
+               <div class="col-lg-4">
+               </div>
+               
+            </div>
+			<div class="text-center">
+               
+               <button v-if="submission.landfill == 'TRUE'"type="button" class="btn btn-success" v-on:click="submission.landfill = 'FALSE'">Landfill</button>
+               <button v-else type="button" class="btn btn-outline-success" v-on:click="submission.landfill = 'TRUE'">Landfill</button>
+               <button v-if="submission.recycle == 'TRUE'"type="button" class="btn btn-success" v-on:click="submission.recycle = 'FALSE'">Recyclables</button>
+               <button v-else type="button" class="btn btn-outline-success" v-on:click="submission.recycle = 'TRUE'">Recyclables</button>
+               <button v-if="submission.bottle == 'TRUE'"type="button" class="btn btn-success" v-on:click="submission.bottle = 'FALSE'">Bottles</button>
+               <button v-else type="button" class="btn btn-outline-success"  v-on:click="submission.bottle = 'TRUE'">Bottles</button>
+               <button v-if="submission.metals == 'TRUE'"type="button" class="btn btn-success" v-on:click="submission.metals = 'FALSE'">Metals</button>
+               <button v-else type="button" class="btn btn-outline-success" v-on:click="submission.metals = 'TRUE'">Metals</button>
+               <button v-if="submission.chemical == 'TRUE'"type="button" class="btn btn-success" v-on:click="submission.chemical = 'FALSE'">Chemicals</button>
+               <button v-else type="button" class="btn btn-outline-success" v-on:click="submission.chemical = 'TRUE'">Chemicals</button>
+               <button v-if="submission.electronic == 'TRUE'"type="button" class="btn btn-success" v-on:click="submission.electronic = 'FALSE'">Electronics</button>
+               <button v-else type="button" class="btn btn-outline-success" v-on:click="submission.electronic = 'TRUE'">Electronics</button>
+               <br><h4 style="color:#009900;"> Click on the map where you want to add a disposal then click the submit button when ready. </h4>
+            </div>
          </div>
          <!-- current disposal locations -->
          <div v-if="curPage=='locate'" id="locate">
             <div class="row">
                <div class="col-lg-4">
-                  <button type="button" class="btn btn-success" style="margin: 20px;" v-on:click="curPage='main'; hideMap();">Home</button>
+                  <button type="button" class="btn btn-success" style="margin: 20px;" v-on:click="curPage='main'; hideMap(); resetLocateOptions()">Home</button>
                </div>
                <div class="col-lg-4 text-center">
-                  <br><br>
-                  <h1 style="color:#009900;font-size: 70px;">Disposal Locations</h1>
+                  <br>
+                  <h1 style="color:#009900;font-size: 40px;">Disposal Locations</h1>
                   <br>
                   <h4 style="color:#009900;">Select waste types and input distance: </h4>
                   
@@ -257,16 +288,16 @@
                
                <button v-if="locateOptions.has('landfill')"type="button" class="btn btn-success" v-on:click="removeLocateOption('landfill')">Landfill</button>
                <button v-else type="button" class="btn btn-outline-success" v-on:click="addLocateOption('landfill')">Landfill</button>
-               <button v-if="locateOptions.has('recycle')"type="button" class="btn btn-success" v-on:click="removeLocateOption('recycle')">Recycle</button>
-               <button v-else type="button" class="btn btn-outline-success" v-on:click="addLocateOption('recycle')">Recycle</button>
-               <button v-if="locateOptions.has('bottle')"type="button" class="btn btn-success" v-on:click="removeLocateOption('bottle')">Bottle</button>
-               <button v-else type="button" class="btn btn-outline-success"  v-on:click="addLocateOption('bottle')">Bottle</button>
-               <button v-if="locateOptions.has('metal')"type="button" class="btn btn-success" v-on:click="removeLocateOption('metal')">Metal</button>
-               <button v-else type="button" class="btn btn-outline-success" v-on:click="addLocateOption('metal')">Metal</button>
-               <button v-if="locateOptions.has('chemical')"type="button" class="btn btn-success" v-on:click="removeLocateOption('chemical')">Chemical</button>
-               <button v-else type="button" class="btn btn-outline-success" v-on:click="addLocateOption('chemical')">Chemical</button>
-               <button v-if="locateOptions.has('electronic')"type="button" class="btn btn-success" v-on:click="removeLocateOption('electronic')">Electronic</button>
-               <button v-else type="button" class="btn btn-outline-success" v-on:click="addLocateOption('electronic')">Electronic</button>
+               <button v-if="locateOptions.has('recycle')"type="button" class="btn btn-success" v-on:click="removeLocateOption('recycle')">Recyclables</button>
+               <button v-else type="button" class="btn btn-outline-success" v-on:click="addLocateOption('recycle')">Recyclables</button>
+               <button v-if="locateOptions.has('bottle')"type="button" class="btn btn-success" v-on:click="removeLocateOption('bottle')">Bottles</button>
+               <button v-else type="button" class="btn btn-outline-success"  v-on:click="addLocateOption('bottle')">Bottles</button>
+               <button v-if="locateOptions.has('metal')"type="button" class="btn btn-success" v-on:click="removeLocateOption('metal')">Metals</button>
+               <button v-else type="button" class="btn btn-outline-success" v-on:click="addLocateOption('metal')">Metals</button>
+               <button v-if="locateOptions.has('chemical')"type="button" class="btn btn-success" v-on:click="removeLocateOption('chemical')">Chemicals</button>
+               <button v-else type="button" class="btn btn-outline-success" v-on:click="addLocateOption('chemical')">Chemicals</button>
+               <button v-if="locateOptions.has('electronic')"type="button" class="btn btn-success" v-on:click="removeLocateOption('electronic')">Electronics</button>
+               <button v-else type="button" class="btn btn-outline-success" v-on:click="addLocateOption('electronic')">Electronics</button>
                <input type="text" id="textInput" placeholder="miles" v-on:keyup="handleDistanceInput"/>
                <button type="button" class="btn btn-success" v-on:click="handleLocate">Find Disposal Locations</button>
                <br><br>
@@ -274,7 +305,16 @@
 			
          </div>
 		 <div id="map"></div>
-         
+         <div id="legend">
+		 <p style="font-weight: bold; font-size: 15px;">Legend</p>
+		 <div><img src="images/landfill.png"> Landfill</div>
+		 <div><img src="images/recycle.png"> Recyclables</div>
+		 <div><img src="images/bottles.png"> Bottles</div>
+		 <div><img src="images/metals.png"> Metals</div>
+		 <div><img src="images/chemicals.png"> Chemicals</div>
+		 <div><img src="images/electronics.png"> Electronics</div>
+		 
+		 </div>
 			<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBcbfy33oV2AXrETnmD74T819p9Ao7wkD0&v=weekly" async></script>
 		 <script src="script.js"></script>
       </div>

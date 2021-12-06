@@ -1,6 +1,6 @@
 body {
     font-family: 'Rubik'; 
-    background: #BAF2BF;
+    background: #e0ffe4;
 }
 
 #header {
@@ -178,15 +178,15 @@ hr {
 	position: relative;
 	left: 50%;
 	transform: translate(-50%, 0%);
-	height: 800px;
+	height: 1024px;
 	width: 80%;
 }
 #legend {
 	font-size: 12px;
 	display: none;
-  font-family: Arial, sans-serif;
-  background: #fff;
-  padding: 10px;
-  margin: 10px;
-  border: 3px solid #000;
+	font-family: Arial, sans-serif;
+	background: #fff;
+	padding: 10px;
+	margin: 10px;
+	border: 3px solid #000;
 }

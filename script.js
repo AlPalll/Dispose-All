@@ -226,7 +226,7 @@ function initMap() {
 		});
 
 	const locationButton = document.createElement("button");
-	locationButton.style.marginBottom = "8px";
+	locationButton.style.marginBottom = "24px";
 	locationButton.style.backgroundColor = "#28a745";
 	locationButton.style.color = "#fff";
 	locationButton.style.fontFamily = "Roboto,Arial,sans-serif";
@@ -290,7 +290,7 @@ function CenterControl(controlDiv, map) {
   controlUI.style.borderRadius = "3px";
   controlUI.style.boxShadow = "0 2px 6px rgba(0,0,0,.3)";
   controlUI.style.cursor = "pointer";
-  controlUI.style.marginTop = "8px";
+  controlUI.style.marginTop = "16px";
   controlUI.style.marginBottom = "22px";
   controlUI.style.textAlign = "center";
   controlUI.title = "Click to submit selected location";
@@ -305,7 +305,7 @@ function CenterControl(controlDiv, map) {
   controlText.style.lineHeight = "38px";
   controlText.style.paddingLeft = "5px";
   controlText.style.paddingRight = "5px";
-  controlText.innerHTML = "Submit";
+  controlText.innerHTML = "Submit Selection";
   controlUI.appendChild(controlText);
   
   controlUI.addEventListener("click", () => {
